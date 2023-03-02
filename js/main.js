@@ -19,9 +19,9 @@ $(function () {
         let allUser = resultats.result.user
         // console.log(allUser)
         const options = `
-          <option class="option1" value="0">Pas commencé</option>
-          <option class="option2" value="1">En cours</option>
-          <option class="option3" value="2">Terminé</option>
+          <option id="option1" value="0">Pas commencé</option>
+          <option id="option2" value="1">En cours</option>
+          <option id="option3" value="2">Terminé</option>
         `
         const select = `<select class="liste" onchange="updateBug(this.value, ${element.id})">${options}</select>`
         const deleteButton = `<button type="button" id="delete" onclick="deleteBug(${element.id})" class="btn btn-danger">supprimer</button>`
