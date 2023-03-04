@@ -31,7 +31,7 @@ $(function () {
             <td>${element.id}</td>
             <td>${element.title}</td>
             <td>${element.description}</td>
-            <td>${new Date(element.timestamp*1000).toLocaleString()}</td>
+            <td>${new Date(element.timestamp * 1000).toLocaleString()}</td>
             <td>${allUser[element.user_id]}</td>
             <td>${select}</td>
             <td>${deleteButton}</td>
@@ -44,9 +44,9 @@ $(function () {
       try {
         const datas = JSON.parse(response)
         // console.log(datas)
-        const bug = JSON.parse(datas).result.bug;
+        const bug = datas.result.bug
         console.log(bug)
-        
+
         const undone = bug.filter((b) => b.state == 1)
         const dones = bug.filter((b) => b.state == 2)
         const bug_length = bug.length
@@ -70,7 +70,7 @@ $(function () {
               console.log(`Invalid state value: ${element.state}`)
           }
         }
-      } catch (message) {
+      } catch (err) {
         // console.log(message)
         // alert('une erreur inattendue')
       }
@@ -97,7 +97,7 @@ $(function () {
             <td>${element.id}</td>
             <td>${element.title}</td>
             <td>${element.description}</td>
-            <td>${new Date(element.timestamp*1000).toLocaleString()}</td>
+            <td>${new Date(element.timestamp * 1000).toLocaleString()}</td>
             <td>${allUser[element.user_id]}</td>
             <td>${select}</td>
             <td>${deleteButton}</td>
@@ -131,8 +131,6 @@ $(function () {
             case '2':
               appendRow(element)
               break
-            default:
-              console.log(`Invalid state value: ${element.state}`)
           }
         }
       } catch (err) {
@@ -155,11 +153,10 @@ $(function () {
 
   /*ajouter */
 
-
   let form = $('#bug-form')
   form.on('submit', function (event) {
     event.preventDefault()
-   
+
     let title = $('#title').val()
     let description = $('#description').val()
 
@@ -187,40 +184,31 @@ $(function () {
   })
 })
 
-/*update */function updateBug(state, bug_id) {
-  let localuser = localStorage.getItem('result');
-  let result = JSON.parse(localuser).result;
+/*update */
 
-  let localbug = localStorage.getItem('resultats');
-  let resultats = JSON.parse(localbug).result.bug;
-  let token = result.token;
+function updateBug(state, bug_id) {
+  let localuser = localStorage.getItem('result')
+  let result = JSON.parse(localuser).result
+
+  let localbug = localStorage.getItem('resultats')
+  let resultats = JSON.parse(localbug).result.bug
+  let token = result.token
 
   $.ajax({
     url: `http://greenvelvet.alwaysdata.net/bugTracker/api/state/${token}/${bug_id}/${state}`,
     type: 'GET',
     success: function (response) {
-      console.log(response);
+      console.log(response)
       // actualise l'affichage de la liste des bugs
       location.reload()
       // $("#thead-dark1").empty();
-      resultats.forEach(function (element) {
-        switch (element.state) {
-          case "0":
-          case "1":
-          case "2":
-            appendRow(element.state);
-            break;
-          default:
-            console.log(`Invalid state value: ${element.state}`);
-        }
-      });
     },
     error: function (xhr, textStatus, errorThrown) {
-      console.log(xhr.responseText);
-      console.log(textStatus);
-      console.log(errorThrown);
+      console.log(xhr.responseText)
+      console.log(textStatus)
+      console.log(errorThrown)
     },
-  });
+  })
 }
 
 //bouton retour
