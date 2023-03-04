@@ -82,7 +82,7 @@ $(function () {
             window.location.replace('/login.html')
           } catch (err) {
             console.log(err)
-            alert('une erreur inattendue')
+            alert('une erreur inattendue')  
           }
         },
         error: function (error) {

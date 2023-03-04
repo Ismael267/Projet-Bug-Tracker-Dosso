@@ -5,8 +5,8 @@ $(function () {
 
   let token = result.token
   let user_id = result.id
-  // console.log(token)
-  // console.log(localuser)
+  console.log(token)
+  console.log(user_id)
 
   /*lister*/
   $.ajax({
@@ -17,6 +17,7 @@ $(function () {
         let users = localStorage.getItem('resultats')
         let resultats = JSON.parse(users)
         let allUser = resultats.result.user
+
         // console.log(allUser)
         const options = `
           <option id="option1" value="0">Pas commencé</option>
@@ -30,7 +31,7 @@ $(function () {
             <td>${element.id}</td>
             <td>${element.title}</td>
             <td>${element.description}</td>
-            <td>${new Date(element.timestamp).toLocaleString()}</td>
+            <td>${new Date(element.timestamp*1000).toLocaleString()}</td>
             <td>${allUser[element.user_id]}</td>
             <td>${select}</td>
             <td>${deleteButton}</td>
@@ -43,12 +44,13 @@ $(function () {
       try {
         const datas = JSON.parse(response)
         // console.log(datas)
-        const bug = datas.result.bug
+        const bug = JSON.parse(datas).result.bug;
         console.log(bug)
+        
         const undone = bug.filter((b) => b.state == 1)
         const dones = bug.filter((b) => b.state == 2)
         const bug_length = bug.length
-        // console.log(dones)
+        console.log(dones)
         $('#all_bugs').append(bug_length)
         $('#on_Bug').append(undone.length)
         $('#done_bugs').append(dones.length)
@@ -68,9 +70,9 @@ $(function () {
               console.log(`Invalid state value: ${element.state}`)
           }
         }
-      } catch (err) {
-        console.log(err)
-        alert('une erreur inattendue')
+      } catch (message) {
+        // console.log(message)
+        // alert('une erreur inattendue')
       }
     },
   })
@@ -95,7 +97,7 @@ $(function () {
             <td>${element.id}</td>
             <td>${element.title}</td>
             <td>${element.description}</td>
-            <td>${new Date(element.timestamp).toLocaleString()}</td>
+            <td>${new Date(element.timestamp*1000).toLocaleString()}</td>
             <td>${allUser[element.user_id]}</td>
             <td>${select}</td>
             <td>${deleteButton}</td>
