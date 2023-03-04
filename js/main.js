@@ -138,7 +138,7 @@
   })
   // code pour recuperé tous les utilisateurs
   $.ajax({
-    url: `http://greenvelvet.alwaysdata.net/bugTracker/api/users/${token}`,
+    url: `http://greenvelvet.alwaysdata.net/bugTracker/api/users/${userToken}`,
     method: 'get',
     success: function (response) {
       let data = JSON.parse(response)
@@ -151,67 +151,12 @@
   /*ajouter */
 
   // Gestion de l'envoi du formulaire
-let bugForm = $('#bug-form');
-bugForm.on('submit', function (event) {
-  event.preventDefault(); // Empêche le formulaire de se soumettre normalement
 
-  // Récupération des données du formulaire
-  let titleInput = $('#title').val();
-  let descriptionInput = $('#description').val();
-
-  // Récupération des données utilisateur stockées en local
-  let localUser = localStorage.getItem('result');
-  let parsedUser = JSON.parse(localUser).result;
-
-  // Extraction du token et de l'ID utilisateur
-  let token = parsedUser.token;
-  let userId = parsedUser.id;
-
-  // Envoi de la requête AJAX pour ajouter le bug
-  $.ajax({
-    url: `http://greenvelvet.alwaysdata.net/bugTracker/api/add/${token}/${userId}`,
-    method: 'POST',
-
-    data: JSON.stringify({
-      title: titleInput,
-      description: descriptionInput,
-    }),
-    success: function (response) {
-      console.log(response);
-    },
-    error: function (error) {
-      console.log(error);
-    },
-  });
-});
 })
 
 /*update */
 
-function updateBug(state, bug_id) {
-  let localuser = localStorage.getItem('result')
-  let result = JSON.parse(localuser).result
 
-  let localbug = localStorage.getItem('resultats')
-  let resultats = JSON.parse(localbug).result.bug
-  let token = result.token
-
-  $.ajax({
-    url: `http://greenvelvet.alwaysdata.net/bugTracker/api/state/${token}/${bug_id}/${state}`,
-    type: 'GET',
-    success: function (response) {
-      console.log(response)
-      // actualise l'affichage de la liste des bugs
-      location.reload()
-      // $("#thead-dark1").empty();
-    },
-    error: function (xhr, textStatus, errorThrown) {
-      console.log(xhr.responseText)
-      console.log(textStatus)
-      console.log(errorThrown)
-    },
-  })
-}
 // Gestion de l'envoi du formulaire
 let bugForm = $('#bug-form');
 bugForm.on('submit', function (event) {
